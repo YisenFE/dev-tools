@@ -3,13 +3,14 @@
 macOS 开发者工具集应用，类似 DevUtils。
 
 ## 项目状态
-- 当前阶段: Phase 1 (UI 框架)
+- 当前阶段: Phase 2 (已完成)
 - 最后更新: 2026-01-11
 
 ## 技术栈
 - Tauri 2.x + React 18 + TypeScript + Vite
-- UI: Tailwind CSS + Radix UI
+- UI: Tailwind CSS
 - 编辑器: CodeMirror 6
+- 状态: Zustand
 - 测试: Vitest + Playwright
 
 ## 快速启动
@@ -24,23 +25,30 @@ npm run tauri dev
 | Phase | 说明 | 状态 |
 |-------|------|------|
 | 0 | 项目骨架 | ✅ 完成 |
-| 1 | UI 框架 | 🔄 进行中 |
-| 2 | JSON 工具 | 未开始 |
+| 1 | UI 框架 | ✅ 完成 |
+| 2 | JSON 工具 | ✅ 完成 |
 | 3 | 扩展工具 | 未开始 |
 | 4 | 增强体验 | 未开始 |
 | 5 | 发布准备 | 未开始 |
 
 ## 已完成功能
 - [x] Tauri + React + TypeScript 项目初始化
-- [x] Vite 构建配置
-- [x] Rust 后端基础结构
+- [x] Tailwind CSS 配置
+- [x] 侧边栏布局 (工具列表 + 搜索框)
+- [x] 主内容区布局
+- [x] React Router 路由
+- [x] 深色/浅色/系统主题切换
+- [x] 工具页面占位
+- [x] CodeMirror 6 编辑器组件
+- [x] JSON 格式化/压缩/校验/排序功能
+- [x] 复制到剪贴板功能
+- [x] Vitest 单元测试 (15 个测试通过)
 
-## 下一步 (Phase 1)
-- [ ] 配置 Tailwind CSS
-- [ ] 创建侧边栏组件
-- [ ] 创建主内容区布局
-- [ ] 实现路由 (react-router)
-- [ ] 实现深色/浅色主题切换
+## 下一步 (Phase 3)
+- [ ] Base64 编解码工具
+- [ ] URL 编解码工具
+- [ ] HTML 编解码工具
+- [ ] XML 格式化工具 (可选)
 
 ## 关键决策
 - 使用 Tauri 而非 Electron (内存占用更小)
