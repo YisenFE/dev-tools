@@ -3,7 +3,7 @@
 macOS 开发者工具集应用，类似 DevUtils。
 
 ## 项目状态
-- 当前阶段: Phase 0 (未开始)
+- 当前阶段: Phase 1 (UI 框架)
 - 最后更新: 2026-01-11
 
 ## 技术栈
@@ -15,6 +15,7 @@ macOS 开发者工具集应用，类似 DevUtils。
 ## 快速启动
 ```bash
 npm install
+source "$HOME/.cargo/env"  # 加载 Rust 环境
 npm run tauri dev
 ```
 
@@ -22,18 +23,24 @@ npm run tauri dev
 
 | Phase | 说明 | 状态 |
 |-------|------|------|
-| 0 | 项目骨架 | 未开始 |
-| 1 | UI 框架 | 未开始 |
+| 0 | 项目骨架 | ✅ 完成 |
+| 1 | UI 框架 | 🔄 进行中 |
 | 2 | JSON 工具 | 未开始 |
 | 3 | 扩展工具 | 未开始 |
 | 4 | 增强体验 | 未开始 |
 | 5 | 发布准备 | 未开始 |
 
 ## 已完成功能
-(暂无)
+- [x] Tauri + React + TypeScript 项目初始化
+- [x] Vite 构建配置
+- [x] Rust 后端基础结构
 
-## 下一步
-- [ ] 执行 Phase 0: 使用 `npm create tauri-app` 初始化项目
+## 下一步 (Phase 1)
+- [ ] 配置 Tailwind CSS
+- [ ] 创建侧边栏组件
+- [ ] 创建主内容区布局
+- [ ] 实现路由 (react-router)
+- [ ] 实现深色/浅色主题切换
 
 ## 关键决策
 - 使用 Tauri 而非 Electron (内存占用更小)

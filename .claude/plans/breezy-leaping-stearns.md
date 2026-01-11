@@ -515,8 +515,8 @@ npm run test:e2e
 
 | Phase | 状态 | 验收 |
 |-------|------|------|
-| Phase 0 | 未开始 | `./scripts/verify-phase0.sh` |
-| Phase 1 | 未开始 | `npm run test:e2e -- phase1` |
+| Phase 0 | ✅ 完成 | `./scripts/verify-phase0.sh` |
+| Phase 1 | 进行中 | `npm run test:e2e -- phase1` |
 | Phase 2 | 未开始 | `npm run test -- json && npm run test:e2e -- phase2` |
 | Phase 3 | 未开始 | `npm run test -- encoders` |
 | Phase 4 | 未开始 | `npm run test:e2e -- phase4` |
