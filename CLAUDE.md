@@ -57,3 +57,74 @@ npm run tauri dev
 
 ## 计划文件
 详细实现计划见: `.claude/plans/breezy-leaping-stearns.md`
+
+---
+
+## 开发流程规范 (新会话必读)
+
+### 1. 开始新会话时
+1. 读取本文件了解项目状态
+2. 读取 `.claude/plans/breezy-leaping-stearns.md` 了解详细计划
+3. 运行 `git log --oneline -5` 了解最近提交
+4. 确认当前阶段，继续未完成的工作
+
+### 2. 每个 Phase 的工作流程
+```
+1. 创建 TodoWrite 任务列表
+2. 实现功能代码
+3. 编写单元测试 (tests/unit/)
+4. 运行验收脚本 (scripts/verify-phaseX.sh)
+5. 更新计划进度表
+6. 更新本文件 (CLAUDE.md)
+7. Git commit
+```
+
+### 3. 验收标准
+- 每个 Phase 必须有对应的验收脚本 `scripts/verify-phaseX.sh`
+- 单元测试必须全部通过 (`npm run test`)
+- 构建必须成功 (`npm run build`)
+- E2E 测试在 Phase 4 统一添加 (Playwright)
+
+### 4. Git 提交规范
+```
+Phase X: 简短描述
+
+- 具体变更1
+- 具体变更2
+- ...
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+```
+
+### 5. 上下文管理
+- 每个 Phase 结束时必须 commit，防止工作丢失
+- 如果 context 接近用尽，优先完成当前 Phase 并 commit
+- 新会话可通过本文件快速恢复上下文
+
+### 6. 测试命令
+```bash
+npm run test              # 运行所有单元测试
+npm run build             # 构建检查
+./scripts/verify-phase0.sh  # Phase 0 验收
+./scripts/verify-phase1.sh  # Phase 1 验收
+./scripts/verify-phase2.sh  # Phase 2 验收
+```
+
+### 7. 文件结构约定
+```
+src/
+├── components/          # 通用组件
+│   ├── Layout/          # 布局组件
+│   └── Editor/          # 编辑器组件
+├── tools/               # 工具模块 (每个工具一个目录)
+│   └── [tool-name]/
+│       ├── index.tsx    # 页面组件
+│       └── utils.ts     # 工具函数
+├── hooks/               # 自定义 hooks
+└── store/               # Zustand store
+tests/
+├── unit/                # 单元测试
+└── e2e/                 # E2E 测试 (Playwright)
+scripts/
+└── verify-phaseX.sh     # 阶段验收脚本
+```
