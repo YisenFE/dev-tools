@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Search,
@@ -8,9 +9,12 @@ import {
   Sun,
   Moon,
   Monitor,
+  Settings,
 } from 'lucide-react';
 import { useToolStore } from '../../store/toolStore';
 import { useThemeStore } from '../../store/themeStore';
+import { useSettingsStore, shortcutToDisplay } from '../../store/settingsStore';
+import { SettingsModal } from '../Settings/SettingsModal';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Braces,
@@ -22,6 +26,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 export function Sidebar() {
   const { searchQuery, setSearchQuery, filteredTools } = useToolStore();
   const { theme, setTheme } = useThemeStore();
+  const { toggleWindowShortcut } = useSettingsStore();
+  const [showSettings, setShowSettings] = useState(false);
 
   const displayTools = filteredTools();
 
@@ -89,7 +95,7 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      {/* Footer with theme toggle and shortcut hint */}
+      {/* Footer with theme toggle, settings, and shortcut hint */}
       <div className="p-3 border-t space-y-2">
         <button
           onClick={cycleTheme}
@@ -99,15 +105,21 @@ export function Sidebar() {
           <ThemeIcon className="w-4 h-4" />
           <span className="capitalize">{theme} theme</span>
         </button>
+        <button
+          onClick={() => setShowSettings(true)}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-md text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))] transition-colors"
+          data-testid="settings-button"
+        >
+          <Settings className="w-4 h-4" />
+          <span>Settings</span>
+        </button>
         <div className="px-3 py-1 text-xs text-[hsl(var(--muted-foreground))]" data-testid="shortcut-hint">
-          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">⌘</kbd>
-          <span className="mx-0.5">+</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">⇧</kbd>
-          <span className="mx-0.5">+</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">D</kbd>
+          <span className="font-mono">{shortcutToDisplay(toggleWindowShortcut)}</span>
           <span className="ml-2">Toggle window</span>
         </div>
       </div>
+
+      <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
     </aside>
   );
 }

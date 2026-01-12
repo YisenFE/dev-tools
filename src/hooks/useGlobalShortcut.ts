@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { register, unregister } from '@tauri-apps/plugin-global-shortcut';
+import { register, unregister, type ShortcutEvent } from '@tauri-apps/plugin-global-shortcut';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 
 export function useGlobalShortcut(
@@ -8,19 +8,36 @@ export function useGlobalShortcut(
   enabled = true
 ) {
   const callbackRef = useRef(callback);
+  const currentShortcutRef = useRef<string | null>(null);
   callbackRef.current = callback;
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || !shortcut) return;
 
-    let registered = false;
+    let isCancelled = false;
 
     const setup = async () => {
+      // Unregister old shortcut if different
+      if (currentShortcutRef.current && currentShortcutRef.current !== shortcut) {
+        try {
+          await unregister(currentShortcutRef.current);
+          console.log(`Unregistered old shortcut: ${currentShortcutRef.current}`);
+        } catch (err) {
+          console.error(`Failed to unregister old shortcut:`, err);
+        }
+      }
+
+      if (isCancelled) return;
+
       try {
-        await register(shortcut, () => {
-          callbackRef.current();
+        await register(shortcut, (event: ShortcutEvent) => {
+          // Only trigger on key press, not release
+          if (event.state === 'Pressed') {
+            callbackRef.current();
+          }
         });
-        registered = true;
+        currentShortcutRef.current = shortcut;
+        console.log(`Registered shortcut: ${shortcut}`);
       } catch (err) {
         console.error(`Failed to register shortcut ${shortcut}:`, err);
       }
@@ -29,8 +46,10 @@ export function useGlobalShortcut(
     setup();
 
     return () => {
-      if (registered) {
-        unregister(shortcut).catch(console.error);
+      isCancelled = true;
+      if (currentShortcutRef.current) {
+        unregister(currentShortcutRef.current).catch(console.error);
+        currentShortcutRef.current = null;
       }
     };
   }, [shortcut, enabled]);
