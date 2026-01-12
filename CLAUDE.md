@@ -3,8 +3,8 @@
 macOS 开发者工具集应用，类似 DevUtils。
 
 ## 项目状态
-- 当前阶段: Phase 2 (已完成)
-- 最后更新: 2026-01-11
+- 当前阶段: Phase 3 (已完成)
+- 最后更新: 2026-01-12
 
 ## 技术栈
 - Tauri 2.x + React 18 + TypeScript + Vite
@@ -27,7 +27,7 @@ npm run tauri dev
 | 0 | 项目骨架 | ✅ 完成 |
 | 1 | UI 框架 | ✅ 完成 |
 | 2 | JSON 工具 | ✅ 完成 |
-| 3 | 扩展工具 | 未开始 |
+| 3 | 扩展工具 | ✅ 完成 |
 | 4 | 增强体验 | 未开始 |
 | 5 | 发布准备 | 未开始 |
 
@@ -42,13 +42,16 @@ npm run tauri dev
 - [x] CodeMirror 6 编辑器组件
 - [x] JSON 格式化/压缩/校验/排序功能
 - [x] 复制到剪贴板功能
-- [x] Vitest 单元测试 (15 个测试通过)
+- [x] Vitest 单元测试 (46 个测试通过)
+- [x] Base64 编解码工具
+- [x] URL 编解码工具
+- [x] HTML 编解码工具
 
-## 下一步 (Phase 3)
-- [ ] Base64 编解码工具
-- [ ] URL 编解码工具
-- [ ] HTML 编解码工具
-- [ ] XML 格式化工具 (可选)
+## 下一步 (Phase 4)
+- [ ] 智能检测输入类型
+- [ ] 快捷键支持
+- [ ] 历史记录功能
+- [ ] E2E 测试 (Playwright)
 
 ## 关键决策
 - 使用 Tauri 而非 Electron (内存占用更小)
@@ -108,6 +111,7 @@ npm run build             # 构建检查
 ./scripts/verify-phase0.sh  # Phase 0 验收
 ./scripts/verify-phase1.sh  # Phase 1 验收
 ./scripts/verify-phase2.sh  # Phase 2 验收
+./scripts/verify-phase3.sh  # Phase 3 验收
 ```
 
 ### 7. 文件结构约定
