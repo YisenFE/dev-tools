@@ -89,8 +89,8 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      {/* Footer with theme toggle */}
-      <div className="p-3 border-t">
+      {/* Footer with theme toggle and shortcut hint */}
+      <div className="p-3 border-t space-y-2">
         <button
           onClick={cycleTheme}
           className="flex items-center gap-2 w-full px-3 py-2 text-sm rounded-md text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))] transition-colors"
@@ -99,6 +99,14 @@ export function Sidebar() {
           <ThemeIcon className="w-4 h-4" />
           <span className="capitalize">{theme} theme</span>
         </button>
+        <div className="px-3 py-1 text-xs text-[hsl(var(--muted-foreground))]" data-testid="shortcut-hint">
+          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">⌘</kbd>
+          <span className="mx-0.5">+</span>
+          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">⇧</kbd>
+          <span className="mx-0.5">+</span>
+          <kbd className="px-1.5 py-0.5 rounded bg-[hsl(var(--accent))] font-mono">D</kbd>
+          <span className="ml-2">Toggle window</span>
+        </div>
       </div>
     </aside>
   );

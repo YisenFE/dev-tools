@@ -1,7 +1,8 @@
-import { useState, useCallback, useMemo } from 'react';
-import { Copy, Check, Lock, Unlock, AlertCircle, List } from 'lucide-react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { Copy, Check, Lock, Unlock, AlertCircle, List, Clipboard } from 'lucide-react';
 import { MainContent } from '../../components/Layout';
 import { useClipboard } from '../../hooks/useClipboard';
+import { useAutoClipboard } from '../../hooks/useAutoClipboard';
 import { encodeUrl, decodeUrl, parseUrlParams } from './utils';
 
 export function UrlEncoder() {
@@ -11,6 +12,21 @@ export function UrlEncoder() {
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [showParams, setShowParams] = useState(false);
   const { copy, copied } = useClipboard();
+  const { clipboardContent, shouldAutoFill, clearAutoFill, detectedType } = useAutoClipboard('url');
+
+  // Auto-fill from clipboard when content matches
+  useEffect(() => {
+    if (shouldAutoFill && clipboardContent && !input) {
+      setInput(clipboardContent);
+      clearAutoFill();
+    }
+  }, [shouldAutoFill, clipboardContent, input, clearAutoFill]);
+
+  const handlePasteFromClipboard = useCallback(() => {
+    if (clipboardContent) {
+      setInput(clipboardContent);
+    }
+  }, [clipboardContent]);
 
   const parsedParams = useMemo(() => {
     try {
@@ -80,6 +96,17 @@ export function UrlEncoder() {
       <div className="h-full flex flex-col gap-4">
         {/* Toolbar */}
         <div className="flex items-center gap-2">
+          <button
+            onClick={handlePasteFromClipboard}
+            disabled={!clipboardContent}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="btn-paste"
+            title={clipboardContent ? `Paste from clipboard (${detectedType})` : 'Clipboard empty'}
+          >
+            <Clipboard className="w-4 h-4" />
+            Paste
+          </button>
+          <div className="w-px h-6 bg-[hsl(var(--border))]" />
           <button
             onClick={handleEncode}
             className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-opacity ${

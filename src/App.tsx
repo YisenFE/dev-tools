@@ -4,8 +4,12 @@ import { JsonFormatter } from './tools/json-formatter';
 import { Base64Tool } from './tools/base64';
 import { UrlEncoder } from './tools/url-encoder';
 import { HtmlEncoder } from './tools/html-encoder';
+import { useGlobalShortcut, toggleWindow } from './hooks/useGlobalShortcut';
 
 function App() {
+  // Register global shortcut Cmd+Shift+D to toggle window
+  useGlobalShortcut('CommandOrControl+Shift+D', toggleWindow);
+
   return (
     <BrowserRouter>
       <Routes>

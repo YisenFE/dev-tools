@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
-import { Copy, Check, Wand2, Minimize2, ArrowDownUp, AlertCircle } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
+import { Copy, Check, Wand2, Minimize2, ArrowDownUp, AlertCircle, Clipboard } from 'lucide-react';
 import { MainContent } from '../../components/Layout';
 import { CodeEditor } from '../../components/Editor/CodeEditor';
 import { useClipboard } from '../../hooks/useClipboard';
+import { useAutoClipboard } from '../../hooks/useAutoClipboard';
 import { formatJson, minifyJson, validateJson, sortJsonKeys } from './utils';
 
 export function JsonFormatter() {
@@ -10,6 +11,21 @@ export function JsonFormatter() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { copy, copied } = useClipboard();
+  const { clipboardContent, shouldAutoFill, clearAutoFill, detectedType } = useAutoClipboard('json');
+
+  // Auto-fill from clipboard when content matches
+  useEffect(() => {
+    if (shouldAutoFill && clipboardContent && !input) {
+      setInput(clipboardContent);
+      clearAutoFill();
+    }
+  }, [shouldAutoFill, clipboardContent, input, clearAutoFill]);
+
+  const handlePasteFromClipboard = useCallback(() => {
+    if (clipboardContent) {
+      setInput(clipboardContent);
+    }
+  }, [clipboardContent]);
 
   const handleFormat = useCallback(() => {
     if (!input.trim()) {
@@ -97,6 +113,17 @@ export function JsonFormatter() {
       <div className="h-full flex flex-col gap-4">
         {/* Toolbar */}
         <div className="flex items-center gap-2">
+          <button
+            onClick={handlePasteFromClipboard}
+            disabled={!clipboardContent}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="btn-paste"
+            title={clipboardContent ? `Paste from clipboard (${detectedType})` : 'Clipboard empty'}
+          >
+            <Clipboard className="w-4 h-4" />
+            Paste
+          </button>
+          <div className="w-px h-6 bg-[hsl(var(--border))]" />
           <button
             onClick={handleFormat}
             className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90 transition-opacity"

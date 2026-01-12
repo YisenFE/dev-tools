@@ -3,7 +3,7 @@
 macOS 开发者工具集应用，类似 DevUtils。
 
 ## 项目状态
-- 当前阶段: Phase 3 (已完成)
+- 当前阶段: Phase 4 (已完成)
 - 最后更新: 2026-01-12
 
 ## 技术栈
@@ -28,7 +28,7 @@ npm run tauri dev
 | 1 | UI 框架 | ✅ 完成 |
 | 2 | JSON 工具 | ✅ 完成 |
 | 3 | 扩展工具 | ✅ 完成 |
-| 4 | 增强体验 | 未开始 |
+| 4 | 增强体验 | ✅ 完成 |
 | 5 | 发布准备 | 未开始 |
 
 ## 已完成功能
@@ -46,12 +46,18 @@ npm run tauri dev
 - [x] Base64 编解码工具
 - [x] URL 编解码工具
 - [x] HTML 编解码工具
+- [x] 全局快捷键 Cmd+Shift+D 唤起窗口
+- [x] 剪贴板内容自动检测
+- [x] 各工具 Paste 按钮支持
+- [x] 快捷键提示 UI
+- [x] Playwright E2E 测试 (9 个测试通过)
 
-## 下一步 (Phase 4)
-- [ ] 智能检测输入类型
-- [ ] 快捷键支持
-- [ ] 历史记录功能
-- [ ] E2E 测试 (Playwright)
+## 下一步 (Phase 5)
+- [ ] 应用图标设计
+- [ ] 构建 DMG 安装包
+- [ ] 代码签名 (可选)
+- [ ] README 文档
+- [ ] GitHub Release
 
 ## 关键决策
 - 使用 Tauri 而非 Electron (内存占用更小)
@@ -107,11 +113,13 @@ Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 ### 6. 测试命令
 ```bash
 npm run test              # 运行所有单元测试
+npm run test:e2e          # 运行 E2E 测试
 npm run build             # 构建检查
 ./scripts/verify-phase0.sh  # Phase 0 验收
 ./scripts/verify-phase1.sh  # Phase 1 验收
 ./scripts/verify-phase2.sh  # Phase 2 验收
 ./scripts/verify-phase3.sh  # Phase 3 验收
+./scripts/verify-phase4.sh  # Phase 4 验收
 ```
 
 ### 7. 文件结构约定
