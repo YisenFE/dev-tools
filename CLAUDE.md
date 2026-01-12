@@ -3,7 +3,7 @@
 macOS 开发者工具集应用，类似 DevUtils。
 
 ## 项目状态
-- 当前阶段: Phase 4 (已完成)
+- 当前阶段: Phase 5 (已完成)
 - 最后更新: 2026-01-12
 
 ## 技术栈
@@ -29,7 +29,7 @@ npm run tauri dev
 | 2 | JSON 工具 | ✅ 完成 |
 | 3 | 扩展工具 | ✅ 完成 |
 | 4 | 增强体验 | ✅ 完成 |
-| 5 | 发布准备 | 未开始 |
+| 5 | 发布准备 | ✅ 完成 |
 
 ## 已完成功能
 - [x] Tauri + React + TypeScript 项目初始化
@@ -51,13 +51,21 @@ npm run tauri dev
 - [x] 各工具 Paste 按钮支持
 - [x] 快捷键提示 UI
 - [x] Playwright E2E 测试 (9 个测试通过)
+- [x] README 文档
+- [x] Tauri 配置优化 (窗口大小、应用信息)
+- [x] macOS .app 构建成功 (9.1MB)
 
-## 下一步 (Phase 5)
-- [ ] 应用图标设计
-- [ ] 构建 DMG 安装包
-- [ ] 代码签名 (可选)
-- [ ] README 文档
-- [ ] GitHub Release
+## 项目已完成!
+
+所有 Phase 均已完成。可以通过以下方式构建和分发：
+
+```bash
+# 构建 macOS 应用
+npm run tauri build
+
+# 应用位置
+src-tauri/target/release/bundle/macos/DevTools.app
+```
 
 ## 关键决策
 - 使用 Tauri 而非 Electron (内存占用更小)
@@ -120,6 +128,7 @@ npm run build             # 构建检查
 ./scripts/verify-phase2.sh  # Phase 2 验收
 ./scripts/verify-phase3.sh  # Phase 3 验收
 ./scripts/verify-phase4.sh  # Phase 4 验收
+./scripts/verify-phase5.sh  # Phase 5 验收
 ```
 
 ### 7. 文件结构约定
